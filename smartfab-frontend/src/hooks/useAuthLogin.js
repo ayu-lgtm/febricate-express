@@ -17,20 +17,20 @@ export function useAuthLogin() {
     const fetchLoginDetails = async () => {
       try {
         // 🔐 Fetch auth token
-        // const tataRes = await fetch("https://immes.corp.tatasteel.com/api/Authentication", {
-        //   method: "GET",
-        //   credentials: "include",
-        //   mode: "cors",
-        // });
+        const tataRes = await fetch("https://immes.corp.tatasteel.com/api/Authentication", {
+          method: "GET",
+          credentials: "include",
+          mode: "cors",
+        });
         
 
         
-        // const data = await tataRes.json();
-        // // console.log(data);
-        // const auth = JSON.parse(data).auth;
-        // if (!auth) throw new Error("No 'auth' token received");
+        const data = await tataRes.json();
+        // console.log(data);
+        const auth = JSON.parse(data).auth;
+        if (!auth) throw new Error("No 'auth' token received");
 
-        const auth ="Gv9XlKLRRDsxO2f43AVGpV2acCxWJ0kWXL2kG9kLri0=";
+        // const auth ="Gv9XlKLRRDsxO2f43AVGpV2acCxWJ0kWXL2kG9kLri0=";
 
         // 🔐 Decrypt token at backend
         const backendRes = await fetch(`${API_BASE}/decrypt-auth`, {
@@ -90,4 +90,5 @@ export function useAuthLogin() {
   }, [redirectDone, navigate]);
 
   return { authData, attempting, routes };
+
 }
