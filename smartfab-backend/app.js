@@ -44,7 +44,22 @@ const ensureUploadDirs = () => {
 ensureUploadDirs();
 
 // ✅ Middlewares
-app.use(cors());
+// app.use(cors());
+const allowedOrigins = [
+  "https://febricate-express.vercel.app", // ✅ Frontend domain
+  "http://localhost:5173" // ✅ Local testing
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
